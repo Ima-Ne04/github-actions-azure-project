@@ -44,8 +44,7 @@ res.send(`
   <hr>
 
   <h2>Server Info</h2>
-  <p><b>Hostname:</b> ${hostname}</p>
-  <p><b>Port:</b> ${port}</p>
+<p><strong>Hostname:</strong> ${process.env.WEBSITE_HOSTNAME}</p>  <p><b>Port:</b> ${port}</p>
   <p><b>Server IP:</b> ${serverIP}</p>
 
   <hr>
