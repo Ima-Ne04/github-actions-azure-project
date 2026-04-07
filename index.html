@@ -5,36 +5,47 @@
 <style>
 body{
 font-family: Arial;
-text-align:center;
-margin-top:100px;
+text-align: center;
+margin-top: 50px;
 }
-h1{
-color:#2c3e50;
+.box{
+border:1px solid #ccc;
+padding:20px;
+width:400px;
+margin:auto;
+border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Welcome to my Azure Website</h1>
+<div class="box">
+<h1>Visit Counter</h1>
 
-<h2>Number of visits:</h2>
+<h2>Visits: <span id="counter">0</span></h2>
 
-<h1 id="counter">0</h1>
+<h3>Server Info</h3>
+<p><b>Hostname:</b> <span id="hostname"></span></p>
+<p><b>Port:</b> <span id="port"></span></p>
+<p><b>Server IP:</b> <span id="serverip"></span></p>
+
+<h3>Client Info</h3>
+<p><b>IP:</b> <span id="clientip"></span></p>
+
+</div>
 
 <script>
 
-let count = localStorage.getItem("visits");
-
-if(count == null){
-count = 0;
-}
-
+let count = localStorage.getItem("visits") || 0;
 count++;
-
-localStorage.setItem("visits",count);
-
+localStorage.setItem("visits", count);
 document.getElementById("counter").innerText = count;
+
+document.getElementById("hostname").innerText = window.location.hostname;
+document.getElementById("port").innerText = window.location.port || "80";
+document.getElementById("serverip").innerText = "Azure Server";
+document.getElementById("clientip").innerText = "Your IP";
 
 </script>
 
