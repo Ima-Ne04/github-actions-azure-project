@@ -4,18 +4,16 @@
 <title>Visit Counter</title>
 
 <style>
+
 body{
 font-family: Arial;
 margin:40px;
 }
 
-h1{
-font-size:32px;
-}
-
 hr{
 margin:30px 0;
 }
+
 </style>
 
 </head>
@@ -24,7 +22,7 @@ margin:30px 0;
 
 <h1>Visit Counter</h1>
 
-<h3>Visits: <span id="visits"></span></h3>
+<h3>Visits: <span id="counter"></span></h3>
 
 <hr>
 
@@ -38,21 +36,36 @@ margin:30px 0;
 
 <h2>Client Info</h2>
 
-<p><b>IP:</b> <span id="clientip"></span></p>
+<p><b>Your Browser:</b> <span id="browser"></span></p>
+<p><b>Your IP:</b> <span id="clientip"></span></p>
 
 <script>
 
-fetch("/api")
+let count = localStorage.getItem("visits");
+
+if(count === null){
+count = 0;
+}
+
+count++;
+
+localStorage.setItem("visits", count);
+
+document.getElementById("counter").innerText = count;
+
+document.getElementById("hostname").innerText = window.location.hostname;
+
+document.getElementById("port").innerText = window.location.port || "80";
+
+document.getElementById("browser").innerText = navigator.userAgent;
+
+fetch("https://api.ipify.org?format=json")
 .then(res=>res.json())
 .then(data=>{
-
-document.getElementById("visits").innerText = data.visits;
-document.getElementById("hostname").innerText = data.hostname;
-document.getElementById("port").innerText = data.port;
-document.getElementById("serverip").innerText = data.serverip;
-document.getElementById("clientip").innerText = data.clientip;
-
+document.getElementById("clientip").innerText = data.ip;
 });
+
+document.getElementById("serverip").innerText = "Azure Server";
 
 </script>
 
