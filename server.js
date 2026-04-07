@@ -1,8 +1,3 @@
-const express = require("express");
-const app = express();
-
-let visits = 0;
-
 app.get("/", (req, res) => {
 
 visits++;
@@ -22,9 +17,7 @@ res.send(`
 <h2>Server Info</h2>
 
 <p><b>Hostname:</b> ${hostname}</p>
-
 <p><b>Port:</b> ${port}</p>
-
 <p><b>Server IP:</b> ${serverIP}</p>
 
 <hr>
@@ -33,10 +26,4 @@ res.send(`
 
 <p><b>IP:</b> ${clientIP}</p>
 `);
-});
-
-const port = process.env.PORT || 8080;
-
-app.listen(port, () => {
-console.log("Server running");
 });
