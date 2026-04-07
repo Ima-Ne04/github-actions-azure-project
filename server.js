@@ -1,5 +1,4 @@
 const express = require("express");
-const os = require("os");
 const app = express();
 
 let visits = 0;
@@ -14,21 +13,31 @@ const serverIP = req.socket.localAddress;
 const clientIP = req.socket.remoteAddress + ":" + req.socket.remotePort;
 
 res.send(`
-<h1>Visit Counter</h1>
-<p>Visits: ${visits}</p>
-<hr>
+Visit Counter
+<br><br>
 
-<h2>Server Info</h2>
-<p><b>Hostname:</b> ${hostname}</p>
-<p><b>Port:</b> ${port}</p>
-<p><b>Server IP:</b> ${serverIP}</p>
+Visits: ${visits}
+<br><br>
 
 <hr>
 
-<h2>Client Info</h2>
-<p><b>IP:</b> ${clientIP}</p>
+<h3>Server Info</h3>
+
+Hostname: ${hostname}
+<br><br>
+
+Port: ${port}
+<br><br>
+
+Server IP: ${serverIP}
+
+<hr>
+
+<h3>Client Info</h3>
+
+IP: ${clientIP}
+
 `);
-
 });
 
 const port = process.env.PORT || 8080;
