@@ -1,9 +1,38 @@
 const express = require("express");
+const os = require("os");
 const app = express();
 
-app.use(express.static(__dirname));
+let visits = 0;
 
-const port = process.env.PORT || 3000;
+app.get("/", (req, res) => {
+
+visits++;
+
+const hostname = req.hostname;
+const port = process.env.PORT || 8080;
+const serverIP = req.socket.localAddress;
+const clientIP = req.socket.remoteAddress + ":" + req.socket.remotePort;
+
+res.send(`
+<h1>Visit Counter</h1>
+<p>Visits: ${visits}</p>
+<hr>
+
+<h2>Server Info</h2>
+<p><b>Hostname:</b> ${hostname}</p>
+<p><b>Port:</b> ${port}</p>
+<p><b>Server IP:</b> ${serverIP}</p>
+
+<hr>
+
+<h2>Client Info</h2>
+<p><b>IP:</b> ${clientIP}</p>
+`);
+
+});
+
+const port = process.env.PORT || 8080;
+
 app.listen(port, () => {
-  console.log("Server running");
+console.log("Server running");
 });
