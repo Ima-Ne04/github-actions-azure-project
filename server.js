@@ -1,19 +1,43 @@
-const express = require("express");
-const path = require("path");
+const http = require("http");
+const os = require("os");
 
-const app = express();
+let visits = 0;
 
-let counter = 0;
+const server = http.createServer((req, res) => {
 
-app.use(express.static(path.join(__dirname)));
+visits++;
 
-app.get("/counter", (req, res) => {
-  counter++;
-  res.send(counter.toString());
+const hostname = os.hostname();
+const serverIP = Object.values(os.networkInterfaces())
+.flat()
+.find(i => i.family === "IPv4" && !i.internal)?.address;
+
+const clientIP = req.socket.remoteAddress + ":" + req.socket.remotePort;
+
+res.writeHead(200, {"Content-Type": "text/html"});
+
+res.end(`
+<h1>Visit Counter</h1>
+
+<p><b>Visits:</b> ${visits}</p>
+
+<hr>
+
+<h2>Server Info</h2>
+
+<p><b>Hostname:</b> ${hostname}</p>
+
+<p><b>Port:</b> ${process.env.PORT}</p>
+
+<p><b>Server IP:</b> ${serverIP}</p>
+
+<hr>
+
+<h2>Client Info</h2>
+
+<p><b>IP:</b> ${clientIP}</p>
+`);
+
 });
 
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => {
-  console.log("Server running on port " + port);
-});
+server.listen(process.env.PORT || 8080);
