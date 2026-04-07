@@ -8,9 +8,10 @@ const server = http.createServer((req, res) => {
 visits++;
 
 const hostname = os.hostname();
-const serverIP = Object.values(os.networkInterfaces())
-.flat()
-.find(i => i.family === "IPv4" && !i.internal)?.address;
+
+const port = process.env.PORT || 8080;
+
+const serverIP = req.headers['x-forwarded-for'] || req.socket.localAddress;
 
 const clientIP = req.socket.remoteAddress + ":" + req.socket.remotePort;
 
@@ -27,7 +28,7 @@ res.end(`
 
 <p><b>Hostname:</b> ${hostname}</p>
 
-<p><b>Port:</b> ${process.env.PORT}</p>
+<p><b>Port:</b> ${port}</p>
 
 <p><b>Server IP:</b> ${serverIP}</p>
 
