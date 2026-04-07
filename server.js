@@ -2,33 +2,51 @@ const express = require('express');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
+
 const counterFile = path.join(__dirname, 'counter.json');
-// Fonction pour lire le compteur depuis le fichier
+
 function readCounter() {
-try {
-const data = fs.readFileSync(counterFile, 'utf8');
-return JSON.parse(data).count || 0;
-} catch (err) {
-return 0; // Par défaut, 0 si le fichier n’existe pas
+  try {
+    const data = fs.readFileSync(counterFile, 'utf8');
+    return JSON.parse(data).count || 0;
+  } catch (err) {
+    return 0;
+  }
 }
-}
+
 function saveCounter(count) {
-fs.writeFileSync(counterFile, JSON.stringify({ count }),
-'utf8');
+  fs.writeFileSync(counterFile, JSON.stringify({ count }), 'utf8');
 }
+
 let visitCount = readCounter();
-const serverName = os.hostname();
+
 app.get('/', (req, res) => {
-visitCount++;
-saveCounter(visitCount);
-res.send(`
-<h1>Welcome to the Visit Counter App!</h1>
-<p>Visitor count: ${visitCount} <br> Nom du serveur :
-${serverName} </p>
-`);
+
+  visitCount++;
+  saveCounter(visitCount);
+
+  const hostname = os.hostname();
+  const serverIP = req.socket.localAddress;
+  const clientIP = req.socket.remoteAddress;
+  const clientPort = req.socket.remotePort;
+
+  res.send(`
+  <h1>Visit Counter</h1>
+  <p>Visits: ${visitCount}</p>
+
+  <h2>Server Info</h2>
+  <p>Hostname: ${hostname}</p>
+  <p>Port: ${port}</p>
+  <p>Server IP: ${serverIP}</p>
+
+  <h2>Client Info</h2>
+  <p>IP: ${clientIP}:${clientPort}</p>
+  `);
 });
+
 app.listen(port, () => {
-console.log(`App is running on http://localhost:${port}`);
+  console.log("Server running on port " + port);
 });
