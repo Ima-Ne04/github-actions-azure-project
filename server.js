@@ -30,9 +30,7 @@ saveCounter(visitCount);
 
 const hostname = os.hostname();
 const serverIP = req.socket.localAddress;
-const clientIP =
-  req.headers['x-forwarded-for']?.split(',')[0] ||
-  req.socket.remoteAddress;
+const clientIP = req.socket.remoteAddress;
 
 const clientPort = req.socket.remotePort;const clientPort = req.socket.remotePort;
 
