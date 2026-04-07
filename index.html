@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Visitor Counter</title>
+<title>Visit Counter</title>
+
+<style>
+
+body{
+font-family: Arial;
+margin:40px;
+}
+
+h1{
+font-size:32px;
+}
+
+hr{
+margin:30px 0;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1>Welcome to my Azure Website</h1>
+<h1>Visit Counter</h1>
 
-<p>Number of visitors:</p>
+<h3>Visits: <span id="counter"></span></h3>
 
-<h2 id="counter"></h2>
+<hr>
+
+<h2>Server Info</h2>
+
+<p><b>Hostname:</b> <span id="host"></span></p>
+<p><b>Port:</b> <span id="port"></span></p>
+<p><b>Server IP:</b> Not available</p>
+
+<hr>
+
+<h2>Client Info</h2>
+
+<p><b>Your Browser:</b> <span id="browser"></span></p>
 
 <script>
 
 let count = localStorage.getItem("visitCount");
 
 if(count === null){
-    count = 0;
+count = 0;
 }
 
 count++;
@@ -25,6 +55,12 @@ count++;
 localStorage.setItem("visitCount", count);
 
 document.getElementById("counter").innerText = count;
+
+document.getElementById("host").innerText = window.location.hostname;
+
+document.getElementById("port").innerText = window.location.port || "80";
+
+document.getElementById("browser").innerText = navigator.userAgent;
 
 </script>
 
