@@ -17,7 +17,7 @@
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
 
-name: Build and deploy container to Azure Web App
+name: Build and deploy container
 
 on:
   push:
@@ -38,17 +38,14 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      - name: Build Docker image
+      - name: Build and push image
         run: |
-          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/visit-counter .
+          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/visit-counter:${{ github.sha }} .
+          docker push ${{ secrets.ACR_LOGIN_SERVER }}/visit-counter:${{ github.sha }}
 
-      - name: Push Docker image
-        run: |
-          docker push ${{ secrets.ACR_LOGIN_SERVER }}/visit-counter
-
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: ${{ secrets.ACR_LOGIN_SERVER }}/visit-counter
+          images: ${{ secrets.ACR_LOGIN_SERVER }}/visit-counter:${{ github.sha }}
