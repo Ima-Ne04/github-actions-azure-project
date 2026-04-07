@@ -1,1 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Visitor Counter</title>
+</head>
 
+<body>
+
+<h1>Welcome to my Azure Website</h1>
+
+<p>Number of visitors:</p>
+
+<h2 id="counter">0</h2>
+
+<script>
+fetch('/counter')
+.then(response => response.text())
+.then(data => {
+document.getElementById("counter").innerText = data;
+});
+</script>
+
+</body>
+</html>
