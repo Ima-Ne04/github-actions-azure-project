@@ -13,36 +13,25 @@ const serverIP = req.socket.localAddress;
 const clientIP = req.socket.remoteAddress + ":" + req.socket.remotePort;
 
 res.send(`
-<!DOCTYPE html>
-<html>
-<head>
-<title>Visit Counter</title>
-</head>
-
-<body style="font-family: serif; margin:40px;">
-
 <h1>Visit Counter</h1>
 
-<p><strong>Visits:</strong> ${visits}</p>
+<p><b>Visits:</b> ${visits}</p>
 
 <hr>
 
 <h2>Server Info</h2>
 
-<p><strong>Hostname:</strong> ${hostname}</p>
+<p><b>Hostname:</b> ${hostname}</p>
 
-<p><strong>Port:</strong> ${port}</p>
+<p><b>Port:</b> ${port}</p>
 
-<p><strong>Server IP:</strong> ${serverIP}</p>
+<p><b>Server IP:</b> ${serverIP}</p>
 
 <hr>
 
 <h2>Client Info</h2>
 
-<p><strong>IP:</strong> ${clientIP}</p>
-
-</body>
-</html>
+<p><b>IP:</b> ${clientIP}</p>
 `);
 });
 
