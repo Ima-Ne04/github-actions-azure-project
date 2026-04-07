@@ -32,19 +32,19 @@ margin:30px 0;
 
 <h2>Server Info</h2>
 
-<p><b>Hostname:</b> <span id="host"></span></p>
+<p><b>Hostname:</b> <span id="hostname"></span></p>
 <p><b>Port:</b> <span id="port"></span></p>
-<p><b>Server IP:</b> Not available</p>
+<p><b>Server IP:</b> <span id="serverip">Not available</span></p>
 
 <hr>
 
 <h2>Client Info</h2>
 
-<p><b>Your Browser:</b> <span id="browser"></span></p>
+<p><b>Browser:</b> <span id="browser"></span></p>
 
 <script>
 
-let count = localStorage.getItem("visitCount");
+let count = localStorage.getItem("visits");
 
 if(count === null){
 count = 0;
@@ -52,11 +52,11 @@ count = 0;
 
 count++;
 
-localStorage.setItem("visitCount", count);
+localStorage.setItem("visits", count);
 
 document.getElementById("counter").innerText = count;
 
-document.getElementById("host").innerText = window.location.hostname;
+document.getElementById("hostname").innerText = window.location.hostname;
 
 document.getElementById("port").innerText = window.location.port || "80";
 
