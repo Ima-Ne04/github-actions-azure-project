@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Visit Counter</title>
+<style>
+body{
+font-family: Arial;
+text-align:center;
+margin-top:100px;
+}
+h1{
+color:#2c3e50;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Welcome to my Azure Website</h1>
+
+<h2>Number of visits:</h2>
+
+<h1 id="counter">0</h1>
+
+<script>
+
+let count = localStorage.getItem("visits");
+
+if(count == null){
+count = 0;
+}
+
+count++;
+
+localStorage.setItem("visits",count);
+
+document.getElementById("counter").innerText = count;
+
+</script>
+
+</body>
+</html>
