@@ -1,17 +1,19 @@
 const express = require("express");
+const path = require("path");
+
 const app = express();
 
 let counter = 0;
 
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname)));
 
 app.get("/counter", (req, res) => {
-counter++;
-res.send(counter.toString());
+  counter++;
+  res.send(counter.toString());
 });
 
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-console.log("Server running");
+  console.log("Server running on port " + port);
 });
